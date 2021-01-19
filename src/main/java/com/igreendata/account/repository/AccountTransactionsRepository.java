@@ -6,29 +6,13 @@ import org.springframework.stereotype.Repository;
 
 import com.igreendata.account.entity.AccountTransaction;
 
+/**
+ *
+ * @author Joby Job
+ *
+ */
 @Repository
 public interface AccountTransactionsRepository
-        extends CrudRepository<AccountTransaction, Long>,
-        JpaSpecificationExecutor<AccountTransaction> {
+		extends CrudRepository<AccountTransaction, Long>, JpaSpecificationExecutor<AccountTransaction> {
 
-    /*
-     * public default List<AccountTransactions> listTransactions(TransactionsQueryFilter filter) {
-     * return (List<AccountTransactions>) findBy }
-     */
-    /**
-     * Find all Debits
-     *
-     * @return
-     */
-    /*
-     * public List<AccountTransactions> findByAccNoAndTransDateBetweenAndTransValueIsLessThan();
-     * public List<AccountTransactions> findByTransDateBetweenAndTransValueIsLessThan();
-     *//**
-        * Find all Credits
-        *
-        * @return
-        *//*
-           * public List<AccountTransactions>
-           * findByAccNoAndTransDateBetweenAndTransValueIsGreaterThan();
-           */
 }

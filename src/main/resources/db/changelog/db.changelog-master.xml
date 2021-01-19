@@ -10,18 +10,18 @@
             <column name="CODE"  type="CHAR(3)">			
 				<constraints primaryKey="true" nullable="false"/>
 			</column>
-            <column name="DESCRIPTION"  type="VARCHAR2(20)"/>
+            <column name="DESCRIPTION"  type="VARCHAR2(40)"/>
         </createTable>
 		<createTable tableName="ACCTYPE">
             <column name="CODE"  type="CHAR(8)">
 				<constraints primaryKey="true" nullable="false"/>
 			</column>
-            <column name="DESCRIPTION"  type="VARCHAR2(25)"/>
+            <column name="DESCRIPTION"  type="VARCHAR2(30)"/>
         </createTable>
     </changeSet>
 	
     <changeSet author="Joby" id="17012021-2">
-        <createTable tableName="ACCOUNTDETAILS">  
+        <createTable tableName="ACCOUNT">  
             <column name="ACCNO" type="CHAR(9)">			
 				<constraints primaryKey="true" nullable="false"/>
 			</column>
@@ -30,10 +30,27 @@
 			<column name="CURRENCY" type="CHAR(3)"/>
 			<column name="BALANCE" type="DECIMAL(10,2)"/>
         </createTable>
-		<addForeignKeyConstraint baseTableName="ACCOUNTDETAILS"
+        <!-- Accounts table Non nullable fields -->
+        <addNotNullConstraint tableName="ACCOUNT"
+	            columnDataType="varchar(15)"
+	            columnName="ACCNAME"
+	            constraintName="accname_not_null"
+	            validate="true"/>
+	    <addNotNullConstraint tableName="ACCOUNT"  
+	            columnDataType="char(8)"
+	            columnName="ACCTYPE"
+	            constraintName="acctype_not_null"
+	            validate="true"/>
+	    <addNotNullConstraint tableName="ACCOUNT"  
+	            columnDataType="char(3)"
+	            columnName="CURRENCY"
+	            constraintName="currency_not_null"
+	            validate="true"/>
+	    <!-- Accounts table  FK relations -->   
+		<addForeignKeyConstraint baseTableName="ACCOUNT"
 			baseColumnNames="ACCTYPE" constraintName="ACCTYPE_FK"
 			referencedTableName="ACCTYPE" referencedColumnNames="CODE"/>
-		<addForeignKeyConstraint baseTableName="ACCOUNTDETAILS"
+		<addForeignKeyConstraint baseTableName="ACCOUNT"
 			baseColumnNames="CURRENCY" constraintName="ACC_CURRENCY_FK"
 			referencedTableName="CURRENCY" referencedColumnNames="CODE"/>	
 		<createTable tableName="ACCOUNTTRANSACTIONS">
@@ -43,14 +60,36 @@
             <column name="ACCNO" type="CHAR(9)"/>
 			<column name="TRANSDATE" type="DATETIME"/>
 			<column name="CURRENCY" type="CHAR(3)"/>
-			<column name="TRANSVALUE" type="DECIMAL(10,2)"/>
+			<column name="TRANSAMT" type="DECIMAL(10,2)"/>
         </createTable>
+        <!-- AccountTransactions table  Non nullable constraints -->
+	    <addNotNullConstraint tableName="ACCOUNTTRANSACTIONS"  
+	            columnDataType="char(9)"
+	            columnName="ACCNO"
+	            constraintName="trans_acc_not_null"
+	            validate="true"/>
+	    <addNotNullConstraint tableName="ACCOUNTTRANSACTIONS"  
+	            columnDataType="DATETIME"
+	            columnName="TRANSDATE"
+	            constraintName="trans_date_not_null"
+	            validate="true"/>
+	    <addNotNullConstraint tableName="ACCOUNTTRANSACTIONS"  
+	            columnDataType="char(3)"
+	            columnName="CURRENCY"
+	            constraintName="trans_currency_not_null"
+	            validate="true"/>
+	    <addNotNullConstraint tableName="ACCOUNTTRANSACTIONS"  
+	            columnDataType="DECIMAL(10,2)"
+	            columnName="TRANSAMT"
+	            constraintName="trans_amount_not_null"
+	            validate="true"/>        
+		<!-- AccountTransactions table FK relations -->   
 		<addForeignKeyConstraint baseTableName="ACCOUNTTRANSACTIONS"
 			baseColumnNames="CURRENCY" constraintName="TRANS_CURRENCY_FK"
 			referencedTableName="CURRENCY" referencedColumnNames="CODE"/>
 		<addForeignKeyConstraint baseTableName="ACCOUNTTRANSACTIONS"
 			baseColumnNames="ACCNO" constraintName="TRANS_ACCNO_FK"
-			referencedTableName="ACCOUNTDETAILS" referencedColumnNames="ACCNO"/>	
+			referencedTableName="ACCOUNT" referencedColumnNames="ACCNO"/>				
     </changeSet>
 	<include  file="/db/changelog/db.changelog-insertConfigData.xml"/>
 </databaseChangeLog>

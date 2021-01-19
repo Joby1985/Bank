@@ -6,16 +6,21 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ *
+ * @author Joby Job
+ *
+ */
 @Getter
 @Setter
 @AllArgsConstructor
 public class TransactionsQueryFilter {
 
-    private Long accNo;
+	private Long accNo;
 
-    private Date startDate;
+	private Date startDate;
 
-    private Date endDate;
+	private Date endDate;
 
-    private String transType;
+	private String transType;
 }

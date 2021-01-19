@@ -4,14 +4,19 @@ import java.math.BigDecimal;
 
 import lombok.Getter;
 
+/**
+ *
+ * @author Joby Job
+ *
+ */
 @Getter
 public class AccountTransactionValueObject {
 
-    private long accNo;
+	private Long accNo;
 
-    private String currency;
+	private String currency;
 
-    private BigDecimal transValue;
+	private BigDecimal transAmount;
 
-    private String transactionType;
+	private String transType;
 }

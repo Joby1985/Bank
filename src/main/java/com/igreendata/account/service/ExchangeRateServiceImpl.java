@@ -13,24 +13,28 @@ import org.springframework.stereotype.Service;
 
 import com.igreendata.account.exceptions.InvalidCurrencyException;
 
+/**
+ *
+ * @author Joby Job
+ *
+ */
 @Service
 public class ExchangeRateServiceImpl implements ExchangeRateService {
 
-    private static ExchangeRateProvider ecbExchangeRateProvider = MonetaryConversions.getExchangeRateProvider(
-            "IMF");
+	private static ExchangeRateProvider ecbExchangeRateProvider = MonetaryConversions.getExchangeRateProvider("IMF");
 
-    @Override
-    public BigDecimal getConvertedValue(BigDecimal value, String fromCurrency, String toCurrency)
-            throws InvalidCurrencyException {
-        MonetaryAmount fromAmount = Monetary.getDefaultAmountFactory().setCurrency(
-                fromCurrency).setNumber(value).create();
-        try {
-            Monetary.getCurrency(fromCurrency);
-            Monetary.getCurrency(toCurrency);
-        } catch (UnknownCurrencyException e) {
-            throw new InvalidCurrencyException(e.getMessage());
-        }
-        CurrencyConversion conversion = ecbExchangeRateProvider.getCurrencyConversion(toCurrency);
-        return BigDecimal.valueOf(fromAmount.with(conversion).getNumber().doubleValue());
-    }
+	@Override
+	public BigDecimal getConvertedValue(BigDecimal value, String fromCurrency, String toCurrency)
+			throws InvalidCurrencyException {
+		MonetaryAmount fromAmount = Monetary.getDefaultAmountFactory().setCurrency(fromCurrency).setNumber(value)
+				.create();
+		try {
+			Monetary.getCurrency(fromCurrency);
+			Monetary.getCurrency(toCurrency);
+		} catch (UnknownCurrencyException e) {
+			throw new InvalidCurrencyException(e.getMessage());
+		}
+		CurrencyConversion conversion = ecbExchangeRateProvider.getCurrencyConversion(toCurrency);
+		return BigDecimal.valueOf(fromAmount.with(conversion).getNumber().doubleValue());
+	}
 }

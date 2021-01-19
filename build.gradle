@@ -30,6 +30,7 @@ dependencies {
 	compile group: 'javax.money', name: 'money-api', version: '1.1'
 	compile group: 'org.javamoney', name: 'moneta', version: '1.4.2'
 	annotationProcessor 'org.projectlombok:lombok'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.4.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

@@ -22,6 +22,10 @@
 	    	insert into currency (CODE,DESCRIPTION) values ('SGD','Singapore Dollar');
 	    	insert into currency (CODE,DESCRIPTION) values ('USD','US Dollar');
 	    	insert into currency (CODE,DESCRIPTION) values ('INR','Indian Rupees');
+	    	insert into currency (CODE,DESCRIPTION) values ('AED','United Arab Emirates dirham');
+	    	insert into currency (CODE,DESCRIPTION) values ('CAD','Canadian Dollar');
+	    	insert into currency (CODE,DESCRIPTION) values ('EUR','Euro');
+	    	insert into currency (CODE,DESCRIPTION) values ('QAR','Qatari riyal');
     	</sql> 
 	</changeSet>
 </databaseChangeLog>

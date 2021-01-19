@@ -15,29 +15,32 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ *
+ * @author Joby Job
+ *
+ */
 @Entity
-@Table(name = "accounttransactions")
+@Table(name = "ACCOUNTTRANSACTIONS")
 @Getter
 @Setter
 public class AccountTransaction {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-    // @ManyToOne
-    // @JoinColumn(name = "ACCNO")
-    @ManyToOne
-    @JoinColumn(name = "ACCNO", insertable = false, updatable = false)
-    private AccountDetail accountDetails;
+	@ManyToOne
+	@JoinColumn(name = "ACCNO", insertable = true, updatable = false)
+	private Account accountDetails;
 
-    @Column(name = "TRANSDATE")
-    private Date transDate;
+	@Column(name = "TRANSDATE", updatable = false)
+	private Date transDate;
 
-    @ManyToOne
-    @JoinColumn(name = "CURRENCY", insertable = false, updatable = false)
-    private Currency currency;
+	@ManyToOne
+	@JoinColumn(name = "CURRENCY", insertable = true, updatable = false)
+	private Currency currency;
 
-    @Column(name = "TRANSVALUE")
-    private BigDecimal transValue;
+	@Column(name = "TRANSAMT", updatable = false)
+	private BigDecimal transAmt;
 }

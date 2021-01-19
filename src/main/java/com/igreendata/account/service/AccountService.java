@@ -2,21 +2,57 @@ package com.igreendata.account.service;
 
 import java.util.List;
 
-import com.igreendata.account.entity.AccountDetail;
+import com.igreendata.account.entity.Account;
 import com.igreendata.account.entity.AccountTransaction;
 import com.igreendata.account.exceptions.IGreenDataAccountException;
 import com.igreendata.account.value.AccountTransactionValueObject;
+import com.igreendata.account.value.AccountValueObject;
 
+/**
+ *
+ * @author Joby Job
+ *
+ */
 public interface AccountService {
 
-    public List<AccountDetail> listAllAccounts();
+	/**
+	 * List all accounts
+	 *
+	 * @return
+	 */
+	public List<Account> listAllAccounts();
 
-    public AccountDetail createAccount(AccountDetail acc) throws IGreenDataAccountException;
+	/**
+	 * Create new account.
+	 *
+	 * @param acc
+	 * @return
+	 * @throws IGreenDataAccountException
+	 */
+	public Account createAccount(AccountValueObject acc) throws IGreenDataAccountException;
 
-    public AccountDetail updateAccount(AccountDetail acc) throws IGreenDataAccountException;
+	/**
+	 * Update if existing account, else create new one.
+	 *
+	 * @param acc
+	 * @return
+	 * @throws IGreenDataAccountException
+	 */
+	public Account updateAccount(AccountValueObject acc) throws IGreenDataAccountException;
 
-    public List<AccountTransaction> listTransactions(TransactionsQueryFilter filter);
+	/**
+	 * List transactions based on the filter criteria.
+	 *
+	 * @param filter
+	 * @return
+	 */
+	public List<AccountTransaction> listTransactions(TransactionsQueryFilter filter);
 
-    public void doTransaction(AccountTransactionValueObject accTransVal)
-            throws IGreenDataAccountException;
+	/**
+	 * Do an account transaction.
+	 *
+	 * @param accTransVal
+	 * @throws IGreenDataAccountException
+	 */
+	public void doTransaction(AccountTransactionValueObject accTransVal) throws IGreenDataAccountException;
 }

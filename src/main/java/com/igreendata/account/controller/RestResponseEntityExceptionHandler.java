@@ -13,13 +13,9 @@ import com.igreendata.account.exceptions.IGreenDataAccountException;
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {
-        IGreenDataAccountException.class
-    })
-    protected ResponseEntity<Object> handleConflict(IGreenDataAccountException ex,
-                                                    WebRequest request) {
-        ex.printStackTrace();
-        return handleExceptionInternal(
-                ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
-    }
+	@ExceptionHandler(value = { IGreenDataAccountException.class })
+	protected ResponseEntity<Object> handleConflict(IGreenDataAccountException ex, WebRequest request) {
+		// ex.printStackTrace();
+		return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
+	}
 }
