@@ -18,6 +18,7 @@ import com.igreendata.account.entity.Currency;
 import com.igreendata.account.entity.TransactionType;
 import com.igreendata.account.exceptions.IGreenDataAccountException;
 import com.igreendata.account.exceptions.InvalidAccountException;
+import com.igreendata.account.exceptions.MaxDebitLimitReached;
 import com.igreendata.account.repository.AccountDetailsRepository;
 import com.igreendata.account.repository.AccountTransactionsRepository;
 import com.igreendata.account.repository.specs.AccountSpecification;
@@ -43,7 +44,7 @@ public class AccountServiceImpl implements AccountService {
 	@Autowired
 	private AccountTransactionsRepository accTransRepository;
 
-	private final long START_ACC_NUM = 11111111111L;
+	private final BigDecimal MAX_DEBIT = BigDecimal.valueOf(-100);
 
 	@Override
 	public List<Account> listAllAccounts() {
@@ -115,7 +116,13 @@ public class AccountServiceImpl implements AccountService {
 			BigDecimal monetaryVal = exchangeServ.getConvertedValue(accTransEntity.getTransAmt(),
 					accTransEntity.getCurrency().getCode(), accountDetail.getCurrency().getCode());
 			if (accountDetail.getBalance() != null) {
-				accountDetail.setBalance(accountDetail.getBalance().add(monetaryVal));
+				BigDecimal netBalance = accountDetail.getBalance().add(monetaryVal);
+				if (netBalance.compareTo(MAX_DEBIT) == -1) {
+					throw new MaxDebitLimitReached(
+							String.format("Net balance would become %f and this exceeds max debit limit of %f.",
+									netBalance.doubleValue(), MAX_DEBIT.doubleValue()));
+				}
+				accountDetail.setBalance(netBalance);
 			}
 			accTransRepository.save(accTransEntity);
 		} else {

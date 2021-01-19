@@ -106,3 +106,4 @@ Pending work:
 ---------------
 1. Add proper unit test cases
 2. Setup Swagger for the endpoints
+3. Error messages should be moved to specific exception classes.
