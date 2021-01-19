@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -54,5 +56,6 @@ public class Account {
 
 	// @OneToMany
 	@OneToMany(mappedBy = "accountDetails", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<AccountTransaction> transactions;
 }
