@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"  
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+  xmlns:pro="http://www.liquibase.org/xml/ns/pro"  
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd
+      http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.2.xsd">  
+    <changeSet  author="Joby"  id="17012021-1">
+        <createTable tableName="CURRENCY">
+            <column name="CODE"  type="CHAR(3)">			
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+            <column name="DESCRIPTION"  type="VARCHAR2(20)"/>
+        </createTable>
+		<createTable tableName="ACCTYPE">
+            <column name="CODE"  type="CHAR(8)">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+            <column name="DESCRIPTION"  type="VARCHAR2(25)"/>
+        </createTable>
+    </changeSet>
+	
+    <changeSet author="Joby" id="17012021-2">
+        <createTable tableName="ACCOUNTDETAILS">  
+            <column name="ACCNO" type="CHAR(9)">			
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="ACCNAME" type="VARCHAR2(15)"/>
+			<column name="ACCTYPE" type="CHAR(8)"/>
+			<column name="CURRENCY" type="CHAR(3)"/>
+			<column name="BALANCE" type="DECIMAL(10,2)"/>
+        </createTable>
+		<addForeignKeyConstraint baseTableName="ACCOUNTDETAILS"
+			baseColumnNames="ACCTYPE" constraintName="ACCTYPE_FK"
+			referencedTableName="ACCTYPE" referencedColumnNames="CODE"/>
+		<addForeignKeyConstraint baseTableName="ACCOUNTDETAILS"
+			baseColumnNames="CURRENCY" constraintName="ACC_CURRENCY_FK"
+			referencedTableName="CURRENCY" referencedColumnNames="CODE"/>	
+		<createTable tableName="ACCOUNTTRANSACTIONS">
+			<column name="id" type="BIGINT" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+            <column name="ACCNO" type="CHAR(9)"/>
+			<column name="TRANSDATE" type="DATETIME"/>
+			<column name="CURRENCY" type="CHAR(3)"/>
+			<column name="TRANSVALUE" type="DECIMAL(10,2)"/>
+        </createTable>
+		<addForeignKeyConstraint baseTableName="ACCOUNTTRANSACTIONS"
+			baseColumnNames="CURRENCY" constraintName="TRANS_CURRENCY_FK"
+			referencedTableName="CURRENCY" referencedColumnNames="CODE"/>
+		<addForeignKeyConstraint baseTableName="ACCOUNTTRANSACTIONS"
+			baseColumnNames="ACCNO" constraintName="TRANS_ACCNO_FK"
+			referencedTableName="ACCOUNTDETAILS" referencedColumnNames="ACCNO"/>	
+    </changeSet>
+	<include  file="/db/changelog/db.changelog-insertConfigData.xml"/>
+</databaseChangeLog>

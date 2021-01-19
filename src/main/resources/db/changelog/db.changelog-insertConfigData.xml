@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"  
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+  xmlns:pro="http://www.liquibase.org/xml/ns/pro"  
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd
+      http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.2.xsd">
+
+	<changeSet  author="Joby"  id="18012021-1">    
+	    <insert schemaName="accounts"  
+	            tableName="acctype">  
+	        <column name="CODE" value="savings"/>
+	        <column name="DESCRIPTION" value="This is a savings account"/>  
+	    </insert>
+	    <insert schemaName="accounts"  
+	            tableName="acctype">  
+	        <column name="CODE" value="current"/>
+	        <column name="DESCRIPTION" value="This is a current account"/>  
+	    </insert>
+	    <sql dbms="mysql" splitStatements="true" stripComments="true">
+	    	insert into currency (CODE,DESCRIPTION) values ('AUD','Australian Dollar');
+	    	insert into currency (CODE,DESCRIPTION) values ('SGD','Singapore Dollar');
+	    	insert into currency (CODE,DESCRIPTION) values ('USD','US Dollar');
+	    	insert into currency (CODE,DESCRIPTION) values ('INR','Indian Rupees');
+    	</sql> 
+	</changeSet>
+</databaseChangeLog>
